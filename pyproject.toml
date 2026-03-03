@@ -34,32 +34,24 @@ dev = [
     "ipykernel>=6.0"
 ]
 
-[tool.setuptools]
-package-dir = {"" = "src"}
-
 [tool.setuptools.packages.find]
-where = ["src"]
-
-# BLACK CONFIG
+where = ["."]
+exclude = ["tests*", "py312venv*", "data*", "models*"]
 
 [tool.black]
 line-length = 88
 target-version = ["py312"]
 
-# RUFF CONFIG
-
 [tool.ruff]
 line-length = 88
 target-version = "py312"
-select = ["E", "F", "I"]  # errors, flakes, import sorting
+select = ["E", "F", "I"]
 ignore = []
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 
-# PYTEST CONFIG
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=aviation_rul --cov-report=term-missing"
+addopts = "--cov-report=term-missing"
