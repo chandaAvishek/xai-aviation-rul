@@ -34,8 +34,11 @@ dev = [
     "ipykernel>=6.0"
 ]
 
+[tool.setuptools.package-dir]
+"" = "src"
+
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 exclude = ["tests*", "py312venv*", "data*", "models*"]
 
 [tool.black]
