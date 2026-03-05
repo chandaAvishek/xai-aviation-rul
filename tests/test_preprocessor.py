@@ -43,3 +43,6 @@ def test_get_last_cycle():
     out = preprocessor.get_last_cycle(df)
     assert out.shape[0] == 2
     assert set(out["unit_number"]) == {1, 2}
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])

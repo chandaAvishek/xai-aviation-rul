@@ -11,8 +11,8 @@ def _column_names() -> list[str]:
         + [f"sensor_{i+1}" for i in range(21)]
     )
 
-def load_cmapps(subset: str = "train", fd: int = 1, path: str | Path = "data/CMAPPS_dataset") -> pd.DataFrame:
-    """Loads the CMAPPS dataset."""
+def load_cmapss(subset: str = "train", fd: int = 1, path: str | Path = "data/CMAPSS_dataset") -> pd.DataFrame:
+    """Loads the CMAPSS dataset."""
     path = Path(path)
     repo_root = Path(__file__).resolve().parents[2]
     base_candidates: list[Path]
@@ -35,7 +35,7 @@ def load_cmapps(subset: str = "train", fd: int = 1, path: str | Path = "data/CMA
     if not existing:
         tried = "\n".join(str(p) for p in candidates)
         raise FileNotFoundError(
-            f"None of the expected CMAPPS files were found.\nTried:\n{tried}"
+            f"None of the expected CMAPSS files were found.\nTried:\n{tried}"
         )
 
     filename = existing[0]

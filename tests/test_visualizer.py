@@ -42,3 +42,6 @@ def test_save_table_as_figure(tmp_path):
     out_path = tmp_path / "table.png"
     visualizer.save_table_as_figure(df, save_path=out_path)
     assert out_path.exists()
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
