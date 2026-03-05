@@ -43,5 +43,54 @@ def test_save_table_as_figure(tmp_path):
     visualizer.save_table_as_figure(df, save_path=out_path)
     assert out_path.exists()
 
+
+def test_save_results_table(tmp_path):
+    """Render a model results DataFrame as a styled table and save it as an image."""
+    # Create sample results DataFrame with model names as index and metrics as columns
+    df = pd.DataFrame({
+        "RMSE": [12.345, 15.678, 10.234],
+        "MAE": [8.901, 10.234, 7.456],
+        "R2": [0.856, 0.789, 0.901]
+    }, index=["Linear Regression", "Random Forest", "XGBoost"])
+    
+    out_path = tmp_path / "results_table.png"
+    visualizer.save_results_table(df, save_path=out_path)
+    assert out_path.exists()
+
+
+def test_save_results_table_with_title(tmp_path):
+    """Test save_results_table with a custom title."""
+    df = pd.DataFrame({
+        "Accuracy": [0.95, 0.93],
+        "Precision": [0.92, 0.89]
+    }, index=["Model A", "Model B"])
+    
+    out_path = tmp_path / "results_table_with_title.png"
+    visualizer.save_results_table(
+        df, 
+        save_path=out_path, 
+        title="Model Performance Comparison"
+    )
+    assert out_path.exists()
+
+
+def test_save_results_table_custom_params(tmp_path):
+    """Test save_results_table with custom formatting parameters."""
+    df = pd.DataFrame({
+        "Score": [100.123, 200.456]
+    }, index=["Test1", "Test2"])
+    
+    out_path = tmp_path / "results_custom.png"
+    visualizer.save_results_table(
+        df,
+        save_path=out_path,
+        figsize=(10, 4),
+        fontsize=12,
+        scale=(2.0, 2.0),
+        title="Custom Formatted Table"
+    )
+    assert out_path.exists()
+
+
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    pytest.main([__file__, "-v"])  # pragma: no cover

@@ -10,6 +10,9 @@ __pycache__/
 *.egg-info/src/*.egg-info/
 aviation_rul.egg-info/
 
+# model files
+models/
+
 # Concept planning
 plan.md
 

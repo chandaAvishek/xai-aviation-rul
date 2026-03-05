@@ -21,4 +21,4 @@ def test_load_cmapss(tmp_path):
     assert df.iloc[0]["unit_number"] == 1
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    pytest.main([__file__, "-v"])  # pragma: no cover

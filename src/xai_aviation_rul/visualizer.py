@@ -175,3 +175,53 @@ def save_table_as_figure(
     plt.tight_layout()
     plt.savefig(save_path, dpi=300, bbox_inches="tight", facecolor=fig.get_facecolor())
     plt.show()
+
+
+def save_results_table(
+    df: pd.DataFrame,
+    save_path: str | Path,
+    figsize: tuple = (8, 3),
+    fontsize: int = 11,
+    scale: tuple = (1.5, 1.8),
+    title: str | None = None,
+) -> None:
+    """Render a model results DataFrame (index=model names, columns=metrics) as a styled table."""
+    col_labels = ["Model"] + list(df.columns)
+    cell_data = [
+        [str(idx)] + [f"{v:.3f}" for v in row]
+        for idx, row in zip(df.index, df.values)
+    ]
+
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.axis("off")
+    fig.patch.set_facecolor("#F8F9FA")
+
+    if title:
+        ax.set_title(title, fontsize=fontsize + 2, fontweight="bold", pad=15, color="#2C3E50")
+
+    table = ax.table(
+        cellText=cell_data,
+        colLabels=col_labels,
+        cellLoc="center",
+        loc="center",
+    )
+    table.auto_set_font_size(False)
+    table.set_fontsize(fontsize)
+    table.scale(*scale)
+
+    for col in range(len(col_labels)):
+        cell = table[0, col]
+        cell.set_facecolor("#2C3E50")
+        cell.set_text_props(color="white", fontweight="bold")
+        cell.set_edgecolor("#2C3E50")
+
+    for row in range(1, len(cell_data) + 1):
+        for col in range(len(col_labels)):
+            cell = table[row, col]
+            cell.set_facecolor("#EAF0FB" if row % 2 == 0 else "white")
+            cell.set_edgecolor("#D5D8DC")
+            cell.set_text_props(color="#2C3E50")
+
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=300, bbox_inches="tight", facecolor=fig.get_facecolor())
+    plt.show()
