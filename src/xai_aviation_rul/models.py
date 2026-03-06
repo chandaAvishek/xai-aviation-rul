@@ -1,19 +1,24 @@
-# Standard
+# standard
 from __future__ import annotations
+
 from pathlib import Path
 from typing import Any
+
+import joblib
 
 # 3rd party
 import numpy as np
 import pandas as pd
-import joblib
-from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from xgboost import XGBRegressor
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
-def train_linear_regression(X_train: pd.DataFrame, y_train: pd.Series) -> LinearRegression:
-    """ Train a baseline Linear Regression model. """
+
+def train_linear_regression(
+    X_train: pd.DataFrame, y_train: pd.Series
+) -> LinearRegression:
+    """Train a simple linear regression model on the data."""
     model = LinearRegression()
     model.fit(X_train, y_train)
     return model
@@ -24,7 +29,7 @@ def train_random_forest(
     n_estimators: int = 100,
     random_state: int = 42,
 ) -> RandomForestRegressor:
-    """ Train a Random Forest Regressor model. """
+    """Train a random forest model with multiple decision trees."""
     model = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
     model.fit(X_train, y_train)
     return model
@@ -37,7 +42,7 @@ def train_xgboost(
     learning_rate: float = 0.05,
     random_state: int = 42,
 ) -> XGBRegressor:
-    """ Train an XGBoost Regressor model. """
+    """Train an XGBoost gradient boosting model."""
     model = XGBRegressor(
         n_estimators=n_estimators,
         max_depth=max_depth,
@@ -52,7 +57,7 @@ def evaluate_model(
     X_test: pd.DataFrame,
     y_test: pd.Series,
 ) -> dict[str, float]:
-    """ Evaluate a model and return RMSE, MAE, and R² scores. """
+    """Calculate RMSE, MAE, and R-squared metrics on test data."""
     y_pred = model.predict(X_test)
     
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -66,12 +71,12 @@ def evaluate_model(
     }
 
 def save_model(model: Any, path: str | Path) -> None:
-    """ Save a model using joblib. """
+    """Save a trained model to disk."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(model, path)
 
 
 def load_model(path: str | Path) -> Any:
-    """ Load a model using joblib. """
+    """Load a trained model from disk."""
     return joblib.load(path)

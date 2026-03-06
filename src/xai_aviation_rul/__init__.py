@@ -2,7 +2,7 @@
 __version__ = "0.1.0"
 
 # Exported symbols
-from . import data_loader, preprocessor, visualizer, models
+from . import data_loader, models, preprocessor, visualizer
 
 __all__ = [
 	"data_loader",

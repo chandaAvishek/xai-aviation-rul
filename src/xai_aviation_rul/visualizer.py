@@ -1,12 +1,13 @@
-# Standard
+# standard
 from __future__ import annotations
+
 from pathlib import Path
 
 # 3rd party
 import matplotlib.pyplot as plt
-import seaborn as sns
-import pandas as pd
 import numpy as np
+import pandas as pd
+import seaborn as sns
 
 # configure seaborn globally
 sns.set(style="whitegrid")
@@ -17,7 +18,9 @@ def plot_rul_distribution(
     save_path: str | Path | None = None,
 ) -> None:
     """Plot the distribution of engine lifespans with RUL cap reference line."""
+    # get RUL column name
     col = "RUL" if "RUL" in df.columns else "RUL_capped"
+    # calculate max RUL per engine
     max_rul_per_engine = df.groupby("unit_number")[col].max()
     plt.figure(figsize=(8, 5))
     plt.hist(max_rul_per_engine, bins=20, edgecolor="black")
@@ -42,9 +45,11 @@ def plot_sensor_trends(
     """Plot time-series of sensor readings for selected engines in a grid."""
     n_engines = len(engine_ids)
     n_sensors = len(sensor_cols)
-    fig, axes = plt.subplots(n_sensors, n_engines, figsize=(5 * n_engines, 3 * n_sensors))
+    fig, axes = plt.subplots(
+        n_sensors, n_engines, figsize=(5 * n_engines, 3 * n_sensors)
+    )
 
-    # ensure axes is always 2D
+    # ensure axes is always 2d
     if n_sensors == 1 and n_engines == 1:
         axes = [[axes]]
     elif n_sensors == 1:
@@ -90,7 +95,13 @@ def plot_sensor_variance(
         if val >= threshold:
             x_pos = idx
             break
-    ax.axvline(x_pos, color="red", linestyle="--", linewidth=1.5, label=f"threshold={threshold}")
+    ax.axvline(
+        x_pos,
+        color="red",
+        linestyle="--",
+        linewidth=1.5,
+        label=f"threshold={threshold}",
+    )
     ax.legend()
     ax.grid(True, alpha=0.3, axis="y")
     fig.tight_layout()
@@ -145,7 +156,13 @@ def save_table_as_figure(
     fig.patch.set_facecolor("#F8F9FA")
 
     if title:
-        ax.set_title(title, fontsize=fontsize + 2, fontweight="bold", pad=15, color="#2C3E50")
+        ax.set_title(
+            title,
+            fontsize=fontsize + 2,
+            fontweight="bold",
+            pad=15,
+            color="#2C3E50",
+        )
 
     table = ax.table(
         cellText=cell_data,
@@ -185,7 +202,10 @@ def save_results_table(
     scale: tuple = (1.5, 1.8),
     title: str | None = None,
 ) -> None:
-    """Render a model results DataFrame (index=model names, columns=metrics) as a styled table."""
+    """Render a model results DataFrame as a styled table.
+
+    Index=model names, columns=metrics.
+    """
     col_labels = ["Model"] + list(df.columns)
     cell_data = [
         [str(idx)] + [f"{v:.3f}" for v in row]
@@ -197,7 +217,13 @@ def save_results_table(
     fig.patch.set_facecolor("#F8F9FA")
 
     if title:
-        ax.set_title(title, fontsize=fontsize + 2, fontweight="bold", pad=15, color="#2C3E50")
+        ax.set_title(
+            title,
+            fontsize=fontsize + 2,
+            fontweight="bold",
+            pad=15,
+            color="#2C3E50",
+        )
 
     table = ax.table(
         cellText=cell_data,

@@ -1,6 +1,13 @@
-import pytest
+# standard
+from __future__ import annotations
+
+# 3rd party
 import pandas as pd
+import pytest
+
+# project
 from xai_aviation_rul import data_loader
+
 
 def test_column_names():
     """Returns the column names for the dataset."""

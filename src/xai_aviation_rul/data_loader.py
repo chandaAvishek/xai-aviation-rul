@@ -1,18 +1,26 @@
 # standard
 from __future__ import annotations
+
 from pathlib import Path
+
+# 3rd party
 import pandas as pd
 
+
 def _column_names() -> list[str]:
-    """Returns the column names for the dataset."""
+    """Get the standard column names for CMAPSS data."""
     return (
         ["unit_number", "time_in_cycles"]
         + [f"op-setting_{i+1}" for i in range(3)]
         + [f"sensor_{i+1}" for i in range(21)]
     )
 
-def load_cmapss(subset: str = "train", fd: int = 1, path: str | Path = "data/CMAPSS_dataset") -> pd.DataFrame:
-    """Loads the CMAPSS dataset."""
+def load_cmapss(
+    subset: str = "train",
+    fd: int = 1,
+    path: str | Path = "data/CMAPSS_dataset",
+) -> pd.DataFrame:
+    """Load CMAPSS dataset from file. Tries multiple filename patterns and locations."""
     path = Path(path)
     repo_root = Path(__file__).resolve().parents[2]
     base_candidates: list[Path]

@@ -1,25 +1,42 @@
-# Standard
+# standard
 from __future__ import annotations
+
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 # 3rd party
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import shap
 
-def compute_shap_values(model, X: pd.DataFrame | np.ndarray) -> tuple[np.ndarray, shap.TreeExplainer]:
-    """Compute SHAP values for a given model and input data."""
+
+def compute_shap_values(
+    model, X: pd.DataFrame | np.ndarray
+) -> tuple[np.ndarray, shap.TreeExplainer]:
+    """Calculate SHAP values to explain model predictions.
+
+    Returns values and explainer object.
+    """
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(X)
 
     return shap_values, explainer
 
-def plot_shap_summary(shap_values: np.ndarray, X: pd.DataFrame, save_path: str| Path | None = None) -> None:
-    """Create a SHAP summary plot for feature importance."""
+def plot_shap_summary(
+    shap_values: np.ndarray,
+    X: pd.DataFrame,
+    save_path: str | Path | None = None,
+) -> None:
+    """Draw a summary plot showing which features are most important
+    overall."""
     plt.figure(figsize=(10, 6))
     shap.summary_plot(shap_values, X, plot_type="dot", show=False)
-    plt.title("SHAP Summary Plot — Global Feature Importance", fontsize=12, fontweight="bold")
+    plt.title(
+        "SHAP Summary Plot — Global Feature Importance",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.tight_layout()
 
     if save_path:
@@ -34,12 +51,12 @@ def plot_shap_waterfall(
         engine_idx: int,
         save_path: str | Path | None = None,
 ) -> None:
-    """Create a SHAP waterfall plot for a specific engine."""
+    """Draw a waterfall plot showing how each sensor value influences one prediction."""
 
-    # Extract base value as scalar (handle both scalar and array cases)
+    # extract base value as scalar (handle both scalar and array cases)
     base_value = explainer.expected_value
     if isinstance(base_value, np.ndarray):
-        base_value = float(base_value[0]) if base_value.size > 0 else float(base_value)
+        base_value = base_value.item() if base_value.size == 1 else float(base_value[0])
     else:
         base_value = float(base_value)
 
@@ -54,7 +71,11 @@ def plot_shap_waterfall(
     # create waterfall plot
     plt.figure(figsize=(10, 6))
     shap.waterfall_plot(explanation, show=False)
-    plt.title(f"SHAP Waterfall Plot — Engine {engine_idx} RUL Prediction Explanation", fontsize=12, fontweight="bold")
+    plt.title(
+        f"SHAP Waterfall Plot — Engine {engine_idx} RUL Prediction Explanation",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.tight_layout()
 
     if save_path:

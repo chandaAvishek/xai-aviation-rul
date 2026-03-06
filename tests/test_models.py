@@ -1,15 +1,21 @@
-import pytest
-import pandas as pd
-import numpy as np
+# standard
 import tempfile
 from pathlib import Path
+
+import numpy as np
+
+# 3rd party
+import pandas as pd
+import pytest
+
+# project
 from xai_aviation_rul.models import (
+    evaluate_model,
+    load_model,
+    save_model,
     train_linear_regression,
     train_random_forest,
     train_xgboost,
-    evaluate_model,
-    save_model,
-    load_model,
 )
 
 
@@ -39,7 +45,7 @@ def sample_data():
 
 
 def test_train_linear_regression(sample_data):
-    """Test Linear Regression training."""
+    """Verify linear regression model trains correctly."""
     X_train, y_train, _, _ = sample_data
     
     model = train_linear_regression(X_train, y_train)
@@ -57,7 +63,7 @@ def test_train_linear_regression(sample_data):
 
 
 def test_train_random_forest(sample_data):
-    """Test Random Forest training with specified hyperparameters."""
+    """Verify random forest model trains with correct hyperparameters."""
     X_train, y_train, _, _ = sample_data
     
     model = train_random_forest(X_train, y_train, n_estimators=100, random_state=42)
@@ -75,7 +81,7 @@ def test_train_random_forest(sample_data):
 
 
 def test_train_xgboost(sample_data):
-    """Test XGBoost training with specified hyperparameters."""
+    """Verify XGBoost model trains with correct hyperparameters."""
     X_train, y_train, _, _ = sample_data
     
     model = train_xgboost(
@@ -101,7 +107,7 @@ def test_train_xgboost(sample_data):
 
 
 def test_evaluate_model(sample_data):
-    """Test model evaluation returns correct metrics."""
+    """Verify model evaluation returns correct metrics dict."""
     X_train, y_train, X_test, y_test = sample_data
     
     model = train_linear_regression(X_train, y_train)
@@ -119,7 +125,7 @@ def test_evaluate_model(sample_data):
 
 
 def test_evaluate_model_perfect_prediction():
-    """Test evaluation with perfect predictions (y_test = y_pred)."""
+    """Verify perfect predictions have RMSE≈0, MAE≈0, R²≈1."""
     y_test = pd.Series([1.0, 2.0, 3.0, 4.0, 5.0])
     
     # Create a mock model that returns perfect predictions
@@ -138,7 +144,7 @@ def test_evaluate_model_perfect_prediction():
 
 
 def test_save_and_load_model(sample_data):
-    """Test saving and loading models with joblib."""
+    """Verify models are saved and loaded correctly."""
     X_train, y_train, X_test, y_test = sample_data
     
     # Train a model
