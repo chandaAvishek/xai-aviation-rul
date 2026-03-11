@@ -22,7 +22,7 @@ All figures generated here are saved to the `figures/` directory and used in the
 
 Trains and evaluates three regression models for RUL prediction.
 
-### `notebooks/03_xai_analysis.ipynb`
+### `notebooks/xai_analysis.ipynb`
 
 Applies SHAP explainability to the trained XGBoost model.
 
@@ -128,10 +128,10 @@ jupyter notebook
 
 Run the notebooks in the following order:
 
-1. `notebooks/01_data_exploration.ipynb`
-2. `notebooks/02_model_training.ipynb`
-3. `notebooks/03_xai_analysis.ipynb`
+1. `notebooks/data-exploration.ipynb`
+2. `notebooks/model_training.ipynb`
+3. `notebooks/xai_analysis.ipynb`
 
-The training notebook saves the fitted XGBoost model to `models/`. The XAI notebook loads this saved model, so notebook `model_training.ipynb` must be run before notebook `xa_analysis.ipynb`.
+The training notebook saves the fitted XGBoost model to `models/`. The XAI notebook loads this saved model, so notebook `models_training.ipynb` must be run before notebook `xai_analysis.ipynb`.
 
 ---
