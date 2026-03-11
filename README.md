@@ -2,7 +2,7 @@
 
 This project implements an explainable AI pipeline for Remaining Useful Life (RUL) prediction of turbofan aircraft engines using the NASA C-MAPSS dataset. The system trains and compares three regression models — Linear Regression, Random Forest, and XGBoost — and applies SHAP (SHapley Additive exPlanations) to interpret the predictions at both global and local levels.
 
-The work is developed as part of an M.Sc. research report at Technische Universitat Darmstadt.
+The work is developed as part of an M.Sc. research report at Technische Universität Darmstadt.
 
 ## Dataset
 
