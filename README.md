@@ -132,6 +132,6 @@ Run the notebooks in the following order:
 2. `notebooks/02_model_training.ipynb`
 3. `notebooks/03_xai_analysis.ipynb`
 
-The training notebook saves the fitted XGBoost model to `models/`. The XAI notebook loads this saved model, so notebook `model_training.ipynb` must be run before notebook `xa_analysis.ipynb`.
+The training notebook saves the fitted XGBoost model to `models/`. The XAI notebook loads this saved model, so notebook `models_training.ipynb` must be run before notebook `xai_analysis.ipynb`.
 
 ---
