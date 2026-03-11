@@ -9,3 +9,14 @@ __pycache__/
 # egg-info
 *.egg-info/src/*.egg-info/
 aviation_rul.egg-info/
+
+# model files
+models/
+
+# Concept planning
+plan.md
+
+# Coverage reports
+htmlcov/
+coverage.xml
+.coverage
